@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue components</title>
+    <style>
+        *{margin: 0;padding: 0}
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page" v-cloak>
+        <ul>
+            <li><button @click="showModal()">Modal</button></li>
+            <li><button @click="showToastFn()">Toast</button></li>
+            <li><button @click="showLoadingFn()">Loading</button></li>
+        </ul>
+        <div style="height: 200px;border: border: solid 1px #666; background: #ccc" ref="loadingbox"></div>
+        <modal
+            :show="modalShow" 
+            @hide="hideModal()" 
+            :mask="true" 
+            :width="850" 
+            :height="300" 
+            :close-able="true">
+            <div>
+            这是一个modal <br>
+            <button @click="modalShowTwo = true">第二个弹层</button>
+                <modal :show="modalShowTwo" :mask="false" @hide="modalShowTwo = false;">第二个modal</modal>
+            </div>
+        </modal>
+        
+    </div>
+</body>
+</html>
