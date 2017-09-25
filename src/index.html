@@ -25,7 +25,8 @@
             :width="850" 
             :height="300" 
             :close-able="true">
-            <div>
+            <div style="overflow: auto">
+            <ul v-for="i in 10">{{i}}</ul>
             这是一个modal <br>
             <button @click="modalShowTwo = true">第二个弹层</button>
                 <modal :show="modalShowTwo" :mask="false" @hide="modalShowTwo = false;">第二个modal</modal>
