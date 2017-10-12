@@ -30,12 +30,10 @@ export default {
             required: true
         },
         width: {
-            type: Number,
-            default: 400
+            type: Number|String,/*支持百分比*/
         },
         height: {
-            type: Number,
-            default: 240
+            type: Number|String,
         },
         duration: {
             type: Number,
@@ -82,8 +80,8 @@ export default {
         dialogStyle() {
             return {
                 ...this.style,
-                width: `${this.width + this.measure}`,
-               // height: `${this.height + this.measure}`
+                width: typeof this.width == 'number' ? `${this.width  + this.measure}` : `${this.width}`,
+                height: typeof this.height == 'number' ? `${this.height  + this.measure}` : `${this.height}`,
             }
         }
     },
@@ -106,7 +104,9 @@ export default {
 <style lang="less">
 .modal,
 .modal-mask {
-    
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -115,17 +115,12 @@ export default {
 }
 
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;  
 }
 
 .modal-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
     background: rgba(0, 0, 0, .5);
 }
 
@@ -150,7 +145,7 @@ export default {
 .modal-close {
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 20px;
     width: 18px;
     height: 18px;
     border-radius: 18px;

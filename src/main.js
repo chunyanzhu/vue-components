@@ -1,31 +1,27 @@
 import Vue from 'vue';
-import Modal from './components/modal/index.js';
-import toast from './components/toast/index.js';
-import loading from './components/loading/index.js';
+import ModalPage from './pages/ModalPage.vue';
+import LoadingPage from './pages/LoadingPage.vue';
+import ToastPage from './pages/ToastPage.vue';
+import AlertPage from './pages/AlertPage.vue';
+import DropDownPage from './pages/DropDownPage.vue';
 
 new Vue({
     el: '.page',
     components: {
-        Modal,
+        ModalPage,
+        LoadingPage,
+        ToastPage,
+        AlertPage,
+        DropDownPage,
     },
-    mixins: [toast, loading],
     data(){
         return{
-            /* 是否显示弹层*/
-            modalShow: false,
-            modalShowTwo: false
+            component: 'ModalPage',
         }
     },
     computed: {
     },
     methods: {
-        showModal(){
-            this.modalShow = true;
-        },
-        hideModal(){
-            this.modalShow =  false;
-            console.log('hide')
-        },
         showToastFn(){
             this.showToast('1秒后会有第二个toast~', 'top', function() {
              console.log('toast1')
@@ -37,16 +33,7 @@ new Vue({
                 });
             }, 1000)
         },
-        showLoadingFn(){
-            var loading1 = this.showLoading('loading ....', this.$refs.loadingbox);
-            var loading2 = this.showLoading('loading ....');
-            setTimeout(() => {
-                this.hideLoading(loading1);
-            },2000)
-            setTimeout(() => {
-                this.hideLoading(loading2);
-            },3000)
-        }
+        
     },
     mounted() {
 

@@ -1,21 +1,9 @@
 import Vue from 'vue'
 import Toast from './Toast.vue'
 
-// const toast = new Vue({
-//   ...Toast
-// })
-
-/*;(() => {
-  const id = 'smart-ui-toast-mount-point'
-  const mountPoint = document.createElement('div')
-  mountPoint.id = id
-  document.body.appendChild(mountPoint)
-  toast.$mount('#' + id)
-})()*/
-
 export default {
 	methods: {
-		showToast: function(){
+		openToast: function(){
 			const toast = new Vue({
 				  ...Toast
 				})

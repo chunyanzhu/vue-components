@@ -8,31 +8,53 @@
         [v-cloak] {
             display: none;
         }
+        ul, li{
+            list-style: none;
+        }
+        html, body, .page{
+            height: 100%;
+        }
+        .wrap{
+            display: flex;
+            min-height: 100%;
+        }
+        .left{
+            background: #2c3136;
+            width: 20%;
+            color: #fff;
+        }
+        .comp_item{
+            padding: 10px;
+            border-bottom: solid 1px #ccc;
+            cursor: pointer;
+        }
+        .comp_item.active{
+            background: #67c895;
+        }
+        .right{
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(246, 246, 246)
+        }
     </style>
 </head>
 <body>
     <div class="page" v-cloak>
-        <ul>
-            <li><button @click="showModal()">Modal</button></li>
-            <li><button @click="showToastFn()">Toast</button></li>
-            <li><button @click="showLoadingFn()">Loading</button></li>
-        </ul>
-        <div style="height: 200px;border: border: solid 1px #666; background: #ccc" ref="loadingbox"></div>
-        <modal
-            :show="modalShow" 
-            @hide="hideModal()" 
-            :mask="true" 
-            :width="850" 
-            :height="300" 
-            :close-able="true">
-            <div style="overflow: auto">
-            <ul v-for="i in 10">{{i}}</ul>
-            这是一个modal <br>
-            <button @click="modalShowTwo = true">第二个弹层</button>
-                <modal :show="modalShowTwo" :mask="false" @hide="modalShowTwo = false;">第二个modal</modal>
+        <div class="wrap">
+            <div class="left">
+                <menu>
+                    <li :class="['comp_item', {'active': component == 'ModalPage'}]" @click="component = 'ModalPage'">Modal</li>
+                    <li :class="['comp_item', {'active': component == 'LoadingPage'}]" @click="selectComponent('LoadingPage')">Loading</li>
+                    <li :class="['comp_item', {'active': component == 'AlertPage'}]" @click="component = 'AlertPage'">Alert</li>
+                    <li :class="['comp_item', {'active': component == 'ToastPage'}]" @click="component = 'ToastPage'">Toast</li>
+                    <li :class="['comp_item', {'active': component == 'DropDownPage'}]" @click="component = 'DropDownPage'">DropDown</li>
+                </menu>
             </div>
-        </modal>
-        
+            <div class="right">
+                <component :is="component"></component>
+            </div>
+        </div>
     </div>
 </body>
 </html>
