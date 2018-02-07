@@ -13,7 +13,13 @@
                 <div class="modal-dialog" v-show="show" :style="dialogStyle">
                     <div class="title" v-if="title"><span class="modal-close" v-if="closeButton" @click="$emit('hide')">+</span>{{title}}</div>
                     <span class="modal-close" v-if="closeButton && !title" @click="$emit('hide')">+</span>
-                    <slot></slot>
+                    <div :class="['dialog_main', {hasfooter: okButton || cancelButton}]">
+                        <slot></slot>
+                    </div>
+                    <div class="footer" v-if="okButton || cancelButton">
+                        <a v-if="okButton" href="javascript:;" @click="okButton.callback()">{{okButton.text}}</a>
+                        <a v-if="cancelButton" href="javascript:;" @click="cancelButton.callback()">{{cancelButton.text}}</a>
+                    </div>
                 </div>
             </transition>
         </div>
@@ -67,6 +73,14 @@ export default {
         title: {
             type: String,
             default: ''
+        },
+        okButton: {
+            type: Object,
+            default: null
+        },
+        cancelButton: {
+            type: Object,
+            default: null
         }
     },
 
