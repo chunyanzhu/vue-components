@@ -1,8 +1,8 @@
 <template>
-    <div :class="['selection', {selection_down: showMenu}]" data-tag="selectionelem">
+    <div :class="['selection', {selection_down: showMenu, 'disabled': disabled}]" :style="{'zIndex': zIndex}">
         <input type="hidden" name="" v-model="val">
-        <i :class="['dropdown_icon', {'up': showMenu}]" @click.stop="showMenu = !showMenu" ref="downIcon"></i>
-        <div class="text" ref="text" @click.stop="showMenu = true">{{getText()}}</div>
+        <i :class="['dropdown_icon', {'up': showMenu}]" @click="!disabled ? (showMenu = !showMenu) : ''" ref="downIcon"></i>
+        <div class="text" ref="text" @click="!disabled ? (showMenu = true) : ''">{{getText()}}</div>
         <div :class="['menu', {'hidden': !showMenu}]" ref="menu">
             <div v-for="item in list" 
                 :class="['item', {'active': item.value== value}]" 
@@ -16,18 +16,24 @@
 </template>
 <script>
     export default{
-        props: ['value', 'list', 'callback'],
+        props: ['disabled', 'value', 'list', 'callback', 'zIndex'],
         data(){
             return{
                 showMenu: false,
                 val: this.value,
             }
         },
+        computed: {
+
+        },
             
         methods: {
+            setVal(val){
+                this.val = val;
+            },
             getText(){
                 for(var i= 0; i < this.list.length; i++ ){
-                    if(this.list[i].value == this.val){
+                    if(this.list[i].value == this.value){
                         return this.list[i].text;
                     }
                 }
@@ -41,11 +47,25 @@
             }
         },
         mounted(){
-            this.$nextTick(() => {
-                document.body.addEventListener('click', (e) => {
+            document.body.addEventListener('click', (e) => {
+                var target = e.target;
+                var _this = this;
+                function checkEl(el){
+                    if(el == _this.$el){
+                        return true;
+                    }
+                    if(el.parentElement){
+                        checkEl(el.parentElement);
+                    }
+                    return false;
+                }
+                var targetInEl = checkEl(target);
+                if(!targetInEl){
                     this.showMenu = false;
-                }, false);
-            });
+                }else{
+                    this.showMenu = true;
+                }
+            }, true);
         }
     }
 </script>
