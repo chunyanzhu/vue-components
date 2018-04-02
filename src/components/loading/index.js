@@ -12,7 +12,10 @@ export default {
             mountPoint.id = id;
             var el = el || document.body;
 
-            el.style.position = 'relative';
+            var elPos = getComputedStyle(el, '').position;
+            if(elPos != 'absolute' && elPos != 'fixed'){
+                el.style.position = 'relative';
+            }
             el.appendChild(mountPoint);
          
             loading.$mount('#' + id);
