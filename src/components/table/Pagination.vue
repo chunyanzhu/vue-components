@@ -1,6 +1,6 @@
 <template language="html">
     <div class="pagination">
-        <select name="" id="" class="page_size_select" v-if="pageSizeList" @change="setPageSize($event)" ref="pageSizeSelect">
+        <select name="" id="" class="page_size_select" v-if="pageSizeList" v-model="page.pageSize" @change="setPageSize($event)" ref="pageSizeSelect">
             <option v-for="(item, index) in pageSizeList" :value="item">{{item}}</option>
         </select>
       <a data-action="first" v-bind:class="'item ' + (hasPrePage?'':'disabled')">首页</a>
